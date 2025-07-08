@@ -11,24 +11,26 @@ test.describe('ParaBank ▶ Registration page', () => {
 
   test('Successful registration with valid data', async ({ page }) => {
     // Fill in valid data
-    await page.getByLabel('First Name').fill('Rose');
-    await page.getByLabel('Last Name').fill('Roldan');
-    await page.getByLabel('Address').fill('123 Main St');
-    await page.getByLabel('City').fill('Makati');
-    await page.getByLabel('State').fill('Metro Manila');
-    await page.getByLabel('Zip Code').fill('1200');
-    await page.getByLabel('Phone').fill('09171234567');
-    await page.getByLabel('SSN').fill('123-45-6789');
-    const username = `user${Date.now()}`;
-    await page.getByLabel('Username').fill(username);
-    await page.getByLabel('Password').fill('Test@1234');
-    await page.getByLabel('Confirm').fill('Test@1234');
+  
+  await page.locator('[id="customer.firstName"]').fill('a');
+  await page.locator('[id="customer.lastName"]').fill('a');
+  await page.locator('[id="customer.address.street"]').fill('a');
+  await page.locator('[id="customer.address.city"]').fill('a');
+  await page.locator('[id="customer.address.state"]').fill('a');
+  await page.locator('[id="customer.address.zipCode"]').fill('a');
+  await page.locator('[id="customer.phoneNumber"]').fill('a');
+  await page.locator('[id="customer.ssn"]').fill('a');
+  await page.locator('[id="customer.username"]').fill('a');
+  await page.locator('[id="customer.password"]').fill('a');
+  await page.locator('#repeatedPassword').fill('a');
+ 
+  
 
     // Submit form
     await page.getByRole('button', { name: 'Register' }).click();
 
     // Expect redirection and confirmation
-    let name = await page.getByLabel('First Name').fill('Rose');
+    let name = await page.getByLabel('First Name').fill('a');
     await expect(page).toHaveURL('https://parabank.parasoft.com/parabank/register.htm');
     await expect(page.locator('.title')).toContainText(`Welcome ${name}`);
   });
