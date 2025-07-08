@@ -11,9 +11,9 @@ test.describe('ParaBank ▶ Registration page', () => {
 
   test('Successful registration with valid data', async ({ page }) => {
     // Fill in valid data
-  
+  const name = 'Rose';
   await page.locator('[id="customer.firstName"]').click();
-  let name = await page.locator('[id="customer.firstName"]').fill('a');
+  await page.locator('[id="customer.firstName"]').fill('a');
   await page.locator('[id="customer.lastName"]').click();
   await page.locator('[id="customer.lastName"]').fill('a');
   await page.locator('[id="customer.address.street"]').click();
@@ -29,7 +29,7 @@ test.describe('ParaBank ▶ Registration page', () => {
   await page.locator('[id="customer.ssn"]').click();
   await page.locator('[id="customer.ssn"]').fill('a');
   await page.locator('[id="customer.username"]').click();
-  await page.locator('[id="customer.username"]').fill('a');
+ await page.locator('[id="customer.username"]').fill(name);
   await page.locator('[id="customer.password"]').click();
   await page.locator('[id="customer.password"]').fill('a');
   await page.locator('#repeatedPassword').click();
