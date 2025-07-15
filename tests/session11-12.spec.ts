@@ -17,7 +17,8 @@ test.describe('ParaBank ▶ Registration page', () => {
   });
 
   test('Successful registration with valid data', async ({ page }) => {
-    const name = 'Rose';
+
+    const name = await page.locator('[id="customer.username"]').inputValue();
     await page.locator('[id="customer.firstName"]').fill('a');
     await page.locator('[id="customer.lastName"]').fill('a');
     await page.locator('[id="customer.address.street"]').fill('a');
@@ -35,4 +36,26 @@ test.describe('ParaBank ▶ Registration page', () => {
     await expect(page).toHaveURL('https://parabank.parasoft.com/parabank/register.htm');
     await expect(page.locator('.title')).toContainText(`Welcome ${name}`);
   });
+
+
+//scenario 2
+test('Click Register  with empty  fields', async ({ page }) => {
+  //await page.goto('https://parabank.parasoft.com/parabank/index.htm;');
+
+  await page.getByRole('link', { name: 'Register' }).click();
+   await page.getByRole('button', { name: 'Register' }).click();
+
+  //assert
+   await expect(page.getByText('First name is required.')).toBeVisible();
+   await expect(page.getByText('text=Last name is required.')).toBeVisible();
+  await expect(page.getByText('text=Address is required.')).toBeVisible();
+  await expect(page.getByText('text=City is required.')).toBeVisible();
+   await expect(page.getByText('text=State is required.')).toBeVisible();
+  await expect(page.getByText('text=Zip Code is required.')).toBeVisible();
+  await expect(page.getByText('text=Social Security Number is required.')).toBeVisible();
+  await expect(page.getByText('text=Username is required.')).toBeVisible();
+  await expect(page.getByText('text=Password is required.')).toBeVisible();
+  await expect(page.getByText('text=Password confirmation is required.')).toBeVisible();
+});
+
 });

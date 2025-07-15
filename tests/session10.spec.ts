@@ -44,4 +44,7 @@ test.describe('ParaBank ▶ Registration page', () => {
     await expect(page).toHaveURL('https://parabank.parasoft.com/parabank/register.htm');
     await expect(page.locator('.title')).toContainText(`Welcome ${name}`);
   });
+
+
+
 });
