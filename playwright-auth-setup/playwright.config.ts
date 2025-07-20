@@ -1,4 +1,7 @@
 import { defineConfig, devices } from '@playwright/test';
+import dotenv from 'dotenv';
+import path from 'path';
+
 
 /**
  * Read environment variables from file.
@@ -6,12 +9,9 @@ import { defineConfig, devices } from '@playwright/test';
  */
 // import dotenv from 'dotenv';
 // import path from 'path';
-// dotenv.config({ path: path.resolve(__dirname, '.env') });
+dotenv.config({ path: path.resolve(__dirname, '.env') });
 
-
-//enabling dot env
-require('dotenv').config({})
-
+export const STORAGE_STATE = path.join(__dirname, "/.auth/user.json");
 /**
  * See https://playwright.dev/docs/test-configuration.
  */
@@ -37,22 +37,37 @@ export default defineConfig({
   },
 
   /* Configure projects for major browsers */
-  projects: [
-    {
-      name: 'chromium',
-      use: { ...devices['Desktop Chrome'] },
-    },
+  // projects: [
+  //   {
+  //     name: 'chromium',
+  //     use: { ...devices['Desktop Chrome'] },
+  //   },
 
-    {
-      name: 'firefox',
-      use: { ...devices['Desktop Firefox'] },
-    },
+  //   {
+  //     name: 'firefox',
+  //     use: { ...devices['Desktop Firefox'] },
+  //   },
 
-    {
-      name: 'webkit',
-      use: { ...devices['Desktop Safari'] },
+  //   {
+  //     name: 'webkit',
+  //     use: { ...devices['Desktop Safari'] },
+  //   },
+projects: [
+     {
+      name: "setup",
+      testMatch: "**/*.setup.ts",
     },
-
+    {
+      name: "e2e",
+      dependencies: ["setup"],
+      use: {
+        storageState: STORAGE_STATE,
+        ...devices["Desktop Chrome"],
+        launchOptions: {
+          args: ["--start-maximized"],
+        },
+      },
+    },
     /* Test against mobile viewports. */
     // {
     //   name: 'Mobile Chrome',
